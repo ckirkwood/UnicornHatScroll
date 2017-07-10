@@ -9,5 +9,5 @@ def getCPUtemperature():
 
 temp = getCPUtemperature()
 
-unicorn_scroll(temp + '~degrsc','yellow',200,0.4)
+unicorn_scroll(temp + '~degrsc','yellow',200,0.1)
 
