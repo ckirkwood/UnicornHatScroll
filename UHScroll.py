@@ -2,7 +2,7 @@
 ''' This python script provides the functions to display simple scrolling text on
 a Pimoroni Unicorn hat, and add-on board for the Raspberry Pi model B+'''
 
-import unicornhat as UH 
+import unicornhathd as UH 
 from bitarray import bitarray
 import time
 #import letter definitions and mappings
@@ -15,11 +15,11 @@ then you can alter the UH.rotation value in the show_letter function below. You 
 the flip call which is used to ensure that the bitarray definitions in uhscroll_letters are the correct 
 way round for easy reading'''
 
-flip = [7,6,5,4,3,2,1,0]
+flip = [0,1,2,3,4,5,6,7]
 
 
 def show_letter(letter,colour,brightness): #displays a single letter on th UH
-	UH.rotation(270)		
+	UH.rotation(90)		
 	for i in range(8):
 		for j in range(8):
 			if letter[j][i]:
