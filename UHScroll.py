@@ -45,7 +45,7 @@ def show_letter(letter,colour,brightness): #displays a single letter on th UH
 	UH.show()
 
 def scroll_letter(letter,colour,brightness,speed): # scrolls a single letter across the UH
-	for i in range(8):
+	for i in range(16):
 		for p in range(6):
 			letter[i].insert(0,False)
 	for s in range(14):
