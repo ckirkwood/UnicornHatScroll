@@ -19,7 +19,7 @@ flip = [0,1,2,3,4,5,6,7]
 
 def show_letter(letter,colour,brightness): # displays a single letter
 	UH.rotation(90)
-	for i in range(16):
+	for i in range(8):
 		for j in range(8):
 			if letter[j][i]:
 				if colour == 'red':
@@ -44,7 +44,7 @@ def show_letter(letter,colour,brightness): # displays a single letter
 	UH.show()
 
 def scroll_letter(letter,colour,brightness,speed): # scrolls a single letter across the UH
-	for i in range(16):
+	for i in range(8):
 		for p in range(6):
 			letter[i].insert(0,False)
 	for s in range(14):
@@ -60,7 +60,7 @@ def scroll_word(word,colour,brightness,speed): # scrolls a word across the UH
 	for s in range(len(word[0])):
 		show_letter(word,colour,brightness)
 		time.sleep(speed)
-		for i in range(16):
+		for i in range(8):
 			word[i].pop(0)
 			word[i].append(0)
 
@@ -76,7 +76,7 @@ def trim_letter(letter): # trims a char's bitarray so that it can be joined with
 	for c in range(len(letter)):
 		trim.append(letter[c].copy())
 	if letter not in super_wides:
-		for i in range(16):
+		for i in range(8):
 			if letter not in wides:
 				trim[i].pop(0)
 			trim[i].pop(0)
@@ -113,9 +113,4 @@ def load_message(message):
 	return(unicorn_message)
 
 def unicorn_scroll(text,colour,brightness,speed):
-	try:
-	scroll_word(make_word(load_message(text)),colour,brightness,speed)
-	except:
-		 print 'Enter unicorn_scroll(message,colour,brightness,speed) where '
-		 print 'message is a string, colour is either red, white, blue, green, pink, yellow, orange or cyan.'
-		 print 'Brightness is a integer 0-255 and speed is the time between chars'
+		scroll_word(make_word(load_message(text)),colour,brightness,speed)
