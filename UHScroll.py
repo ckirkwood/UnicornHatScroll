@@ -61,7 +61,7 @@ def scroll_word(word,colour,brightness,speed): # scrolls a word across the UH
 	for s in range(len(word[0])):
 		show_letter(word,colour,brightness)
 		time.sleep(speed)
-		for i in range(8):
+		for i in range(16):
 			word[i].pop(0)
 			word[i].append(0)
 
