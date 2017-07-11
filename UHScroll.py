@@ -2,25 +2,25 @@
 ''' This python script provides the functions to display simple scrolling text on
 a Pimoroni Unicorn hat, and add-on board for the Raspberry Pi model B+'''
 
-import unicornhathd as UH 
+import unicornhathd as UH
 from bitarray import bitarray
 import time
 #import letter definitions and mappings
 from UHScroll_defs import *
 
 '''It assumes the Pi/hat will orientated with the long side of the Pi without any connectors on
-the bottom, i.e. the Hat will be rotated 90 degrees clockwise (assuming the "UNICORN HAT" label and 
-Pimoroni logo are normally at the bottom of the hat. If you want to use a different orientation  
+the bottom, i.e. the Hat will be rotated 90 degrees clockwise (assuming the "UNICORN HAT" label and
+Pimoroni logo are normally at the bottom of the hat. If you want to use a different orientation
 then you can alter the UH.rotation value in the show_letter function below. You may also need to adjust or omit
-the flip call which is used to ensure that the bitarray definitions in uhscroll_letters are the correct 
+the flip call which is used to ensure that the bitarray definitions in uhscroll_letters are the correct
 way round for easy reading'''
 
 flip = [0,1,2,3,4,5,6,7]
 
 
 def show_letter(letter,colour,brightness): #displays a single letter on th UH
-	UH.rotation(90)		
-	for i in range(8):
+	UH.rotation(90)
+	for i in range(16):
 		for j in range(8):
 			if letter[j][i]:
 				if colour == 'red':
@@ -71,13 +71,13 @@ def make_word(words): # takes a list of chars and concats into a word by making 
 		for i in range(len(words[w])):
 			bigword[i] = bigword[i] + words[w][i]
 	return bigword
-	
+
 def trim_letter(letter): #trims a char's bitarray so that it can be joined without too big a gap
 	trim = []
 	for c in range(len(letter)):
 		trim.append(letter[c].copy())
 	if letter not in super_wides:
-		for i in range(8):
+		for i in range(16):
 			if letter not in wides:
 				trim[i].pop(0)
 			trim[i].pop(0)
@@ -86,7 +86,7 @@ def trim_letter(letter): #trims a char's bitarray so that it can be joined witho
 				trim[i].pop(0)
 			if letter in super_narrow:
 				trim[i].pop(0)
-				
+
 	return trim
 
 def map_character(chr):
@@ -110,16 +110,13 @@ def load_message(message):
 				skip = 5
 			else:
 				unicorn_message.append(trim_letter(map_character(message[ch].upper())))
-		
+
 	return(unicorn_message)
 
 def unicorn_scroll(text,colour,brightness,speed):
 	#try:
 	scroll_word(make_word(load_message(text)),colour,brightness,speed)
-	#except: 
+	#except:
 		#print 'Enter unicorn_scroll(message,colour,brightness,speed) where '
 		#print 'message is a string, colour is either red,white,blue,green,pink, yellow, orange or cyan'
 		#print 'brightness is a integer 0-255 and speed is the time between chars'
-	
-
-
