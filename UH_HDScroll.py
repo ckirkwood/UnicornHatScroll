@@ -1,26 +1,25 @@
 #V1.01
-''' This python script provides the functions to display simple scrolling text on
-a Pimoroni Unicorn hat, and add-on board for the Raspberry Pi model B+'''
+'''
+This python script provides the functions to display simple scrolling text on
+a Pimoroni Unicorn Hat HD, an add-on board for the Raspberry Pi model B+
 
-import unicornhat as UH
+Currently, this will only sroll text across an 8x8 portion of the 16x16 HD version
+'''
+
+import unicornhathd as UH
 from bitarray import bitarray
 import time
-#import letter definitions and mappings
+# import letter definitions and mappings
 from UHScroll_defs import *
 
-'''It assumes the Pi/hat will orientated with the long side of the Pi without any connectors on
-the bottom, i.e. the Hat will be rotated 90 degrees clockwise (assuming the "UNICORN HAT" label and
-Pimoroni logo are normally at the bottom of the hat. If you want to use a different orientation
-then you can alter the UH.rotation value in the show_letter function below. You may also need to adjust or omit
-the flip call which is used to ensure that the bitarray definitions in uhscroll_letters are the correct
-way round for easy reading'''
+'''It assumes the Pi/Hat will orientated with the ethernet/USB ports of the Pi along the bottom, i.e. the Hat will be rotated 90 degrees clockwise. If you want to use a different orientation then you can alter the UH.rotation value in the show_letter function below. You may also need to adjust (by reversing the order) or omit the flip call which is used to ensure that the bitarray definitions in UHScroll_defs.py are the correct way round for easy reading'''
 
-flip = [7,6,5,4,3,2,1,0]
+flip = [0,1,2,3,4,5,6,7]
 
 
-def show_letter(letter,colour,brightness): #displays a single letter on th UH
-	UH.rotation(270)
-	for i in range(8):
+def show_letter(letter,colour,brightness): # displays a single letter
+	UH.rotation(90)
+	for i in range(16):
 		for j in range(8):
 			if letter[j][i]:
 				if colour == 'red':
@@ -45,7 +44,7 @@ def show_letter(letter,colour,brightness): #displays a single letter on th UH
 	UH.show()
 
 def scroll_letter(letter,colour,brightness,speed): # scrolls a single letter across the UH
-	for i in range(8):
+	for i in range(16):
 		for p in range(6):
 			letter[i].insert(0,False)
 	for s in range(14):
@@ -61,7 +60,7 @@ def scroll_word(word,colour,brightness,speed): # scrolls a word across the UH
 	for s in range(len(word[0])):
 		show_letter(word,colour,brightness)
 		time.sleep(speed)
-		for i in range(8):
+		for i in range(16):
 			word[i].pop(0)
 			word[i].append(0)
 
@@ -72,12 +71,12 @@ def make_word(words): # takes a list of chars and concats into a word by making 
 			bigword[i] = bigword[i] + words[w][i]
 	return bigword
 
-def trim_letter(letter): #trims a char's bitarray so that it can be joined without too big a gap
+def trim_letter(letter): # trims a char's bitarray so that it can be joined without too big a gap
 	trim = []
 	for c in range(len(letter)):
 		trim.append(letter[c].copy())
 	if letter not in super_wides:
-		for i in range(8):
+		for i in range(16):
 			if letter not in wides:
 				trim[i].pop(0)
 			trim[i].pop(0)
@@ -100,7 +99,7 @@ def load_message(message):
 	message = '  ' + message # pad the message with a couple of spaces so it starts on the right
 	skip = 0
 	for ch in (range(len(message))):
-		#print message[ch]
+		# print message[ch]
 		if skip != 0:
 			skip-=1
 		else:
@@ -114,9 +113,9 @@ def load_message(message):
 	return(unicorn_message)
 
 def unicorn_scroll(text,colour,brightness,speed):
-	#try:
+	try:
 	scroll_word(make_word(load_message(text)),colour,brightness,speed)
-	#except:
-		#print 'Enter unicorn_scroll(message,colour,brightness,speed) where '
-		#print 'message is a string, colour is either red,white,blue,green,pink, yellow, orange or cyan'
-		#print 'brightness is a integer 0-255 and speed is the time between chars'
+	except:
+		 print 'Enter unicorn_scroll(message,colour,brightness,speed) where '
+		 print 'message is a string, colour is either red, white, blue, green, pink, yellow, orange or cyan.'
+		 print 'Brightness is a integer 0-255 and speed is the time between chars'

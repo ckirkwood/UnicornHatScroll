@@ -1,6 +1,6 @@
-from UHScroll import *
+from UH_HDScroll import *
 from time import sleep
-import os 
+import os
 
 def getCPUtemperature():
     res = os.popen('vcgencmd measure_temp').readline()
@@ -9,4 +9,3 @@ def getCPUtemperature():
 temp = getCPUtemperature()
 
 unicorn_scroll('CPU-' + temp + '~degrsc','yellow',200,0.07)
-
